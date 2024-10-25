@@ -30,5 +30,22 @@ pipeline {
                 sh " cat deployment.yaml " 
             }
         }
+         stage("Commit Changes") {
+            steps {
+                sh """
+                   git config --global user.name "opsfusionlabs"
+                   git config --global user.email "opsfusionlabs@gmail.com"
+                   git add deployment.yaml
+                   git commit -m "Updated Deployment Manifest"
+                """
+            }
+        }
+         stage("Push") {
+            steps {
+                withCredentials([gitUsernamePassword(credentialsId: 'git-hub-push-id', gitToolName: 'git-tool')]) {
+                    sh "git push  https://github.com/opsfusionlabs/k8-manifest-files.git master"
+                }
+            }
+        }
     }
 }
