@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        stage("Repo San"){
+        stage("Repo Scan"){
             steps{
                 sh """
                 trivy repo https://github.com/opsfusionlabs/k8-manifest-files.git > scan.txt
