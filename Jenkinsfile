@@ -25,6 +25,15 @@ pipeline {
             }
         }
 
+        stage("Repo San"){
+            steps{
+                sh """
+                trivy repo https://github.com/opsfusionlabs/k8-manifest-files.git > scan.txt
+                cat scan.txt 
+                """
+            }
+        }
+
          stage("New Deploymnet File") {
             steps {
                 sh " cat deployment.yaml " 
